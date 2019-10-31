@@ -1,86 +1,39 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import calendar, {
-  isDate,
-  isSameDay,
-  isSameMonth,
-  getDateISO,
-  getNextMonth,
-  getPreviousMonth,
-  WEEK_DAYS,
-  CALENDAR_MONTHS
-} from "../utils/dateParser";
+import calendar, { dateObject, isDate } from "../utils/dateParser";
+import CalendarHeader from "./calendarHeader";
 
 class Calendar extends Component {
-  state = { ...this.resolveStateFromProp(), today: new Date() };
+  constructor(props) {
+    super(props);
 
-  resolveStateFromDate(date) {
-    const isDateObject = isDate(date);
-    const _date = isDateObject ? date : new Date();
+    const { date } = props;
 
-    return {
-      current: isDateObject ? date : null,
-      month: +_date.getMonth() + 1,
-      year: _date.getFullYear()
+    this.state = {
+      current: date,
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
+      today: new Date()
     };
-  }
-
-  resolveStateFromProp() {
-    return this.resolveStateFromDate(this.props.date);
   }
 
   getCalendarDates = () => {
     const { current, month, year } = this.state;
-    const calendarMonth = month || +current.getMonth() + 1;
-    const calendarYear = year || current.getFullYear();
-
-    return calendar(calendarMonth, calendarYear);
+    return calendar(month, year);
   };
-  // Render the month and year header with arrow controls
-  // for navigating through months and years
-  renderMonthAndYear = () => {
-    const { month, year } = this.state;
 
-    // Resolve the month name from the CALENDAR_MONTHS object map
-    const monthname = Object.keys(CALENDAR_MONTHS)[
-      Math.max(0, Math.min(month - 1, 11))
-    ];
-
-    return (
-      <div>
-        <div
-          onMouseDown={this.handlePrevious}
-          onMouseUp={this.clearPressureTimer}
-          title="Previous Month"
-        />
-
-        <div>
-          {monthname} {year}
-        </div>
-
-        <div
-          onMouseDown={this.handleNext}
-          onMouseUp={this.clearPressureTimer}
-          title="Next Month"
-        />
-      </div>
-    );
-  };
   render() {
+    const { month, year } = this.state;
     return (
       <div>
-        {this.renderMonthAndYear()}
-
-        <div>{}</div>
-
-        <div>{}</div>
+        <CalendarHeader month={month} year={year}></CalendarHeader>
       </div>
     );
   }
 }
 
 Calendar.propTypes = {
-  date: PropTypes.instanceOf(Date),
+  date: PropTypes.instanceOf(Date).isRequired,
   onDateChanged: PropTypes.func
 };
 

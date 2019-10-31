@@ -1,39 +1,40 @@
-export const THIS_YEAR = new Date().getFullYear();
-
-export const THIS_MONTH = new Date().getMonth() + 1;
-
-export const WEEK_DAYS = {
-  Sunday: "Sun",
-  Monday: "Mon",
-  Tuesday: "Tue",
-  Wednesday: "Wed",
-  Thursday: "Thu",
-  Friday: "Fri",
-  Saturday: "Sat"
+export const dateObject = {
+  thisYear: new Date().getFullYear(),
+  thisMonth: new Date().getMonth() + 1,
+  weekDays: {
+    Monday: "Mon",
+    Tuesday: "Tue",
+    Wednesday: "Wed",
+    Thursday: "Thu",
+    Friday: "Fri",
+    Saturday: "Sat",
+    Sunday: "Sun"
+  },
+  calendarMonths: {
+    January: "Jan",
+    February: "Feb",
+    March: "Mar",
+    April: "Apr",
+    May: "May",
+    June: "Jun",
+    July: "Jul",
+    August: "Aug",
+    September: "Sep",
+    October: "Oct",
+    November: "Nov",
+    December: "Dec"
+  },
+  calendarWeeks: 6
 };
-
-export const CALENDAR_MONTHS = {
-  January: "Jan",
-  February: "Feb",
-  March: "Mar",
-  April: "Apr",
-  May: "May",
-  June: "Jun",
-  July: "Jul",
-  August: "Aug",
-  September: "Sep",
-  October: "Oct",
-  November: "Nov",
-  December: "Dec"
-};
-
-export const CALENDAR_WEEKS = 6;
 
 export const leadingZero = (value, length) => {
   return `${value}`.padStart(length, "0");
 };
 
-export const getMonthDays = (month = THIS_MONTH, year = THIS_YEAR) => {
+export const getMonthDays = (
+  month = dateObject.thisMonth,
+  year = dateObject.thisYear
+) => {
   const months = [4, 6, 9, 11];
   const leapYear = year % 4 === 0;
   if (month === 2) {
@@ -51,7 +52,10 @@ export const getMonthDays = (month = THIS_MONTH, year = THIS_YEAR) => {
   }
 };
 getMonthDays();
-export const getMonthFirstDay = (month = THIS_MONTH, year = THIS_YEAR) => {
+export const getMonthFirstDay = (
+  month = dateObject.thisMonth,
+  year = dateObject.thisYear
+) => {
   return new Date(`${year}-${leadingZero(month, 2)}-01`).getDay() + 1;
 };
 
@@ -130,7 +134,7 @@ export const getNextMonth = (month, year) => {
 // Returns an array of the calendar dates.
 // Each calendar date is represented as an array => [YYYY, MM, DD]
 
-export default (month = THIS_MONTH, year = THIS_YEAR) => {
+export default (month = dateObject.thisMonth, year = dateObject.thisYear) => {
   // Get number of days in the month and the month's first day
 
   const monthDays = getMonthDays(month, year);
@@ -141,7 +145,7 @@ export default (month = THIS_MONTH, year = THIS_YEAR) => {
 
   const daysFromPrevMonth = monthFirstDay - 1;
   const daysFromNextMonth =
-    CALENDAR_WEEKS * 7 - (daysFromPrevMonth + monthDays);
+    dateObject.calendarWeeks * 7 - (daysFromPrevMonth + monthDays);
 
   // Get the previous and next months and years
 
