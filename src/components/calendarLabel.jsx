@@ -1,10 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
+import { dateObject } from "./../utils/dateParser";
 
-class CalendarLabel extends Component {
-  state = {};
-  render() {
-    return <div></div>;
-  }
-}
+const CalendarLable = () => {
+  return (
+    <div>
+      {Object.keys(dateObject.weekDays).map(e => (
+        <div key={e}>{dateObject.weekDays[e].toUpperCase()}</div>
+      ))}
+    </div>
+  );
+};
 
-export default CalendarLabel;
+export default CalendarLable;

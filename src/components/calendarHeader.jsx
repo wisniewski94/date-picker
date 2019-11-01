@@ -19,25 +19,27 @@ class CalendarHeader extends Component {
   };
 
   setPrevMonth = () => {
-    const { month, year } = this.state;
+    const { month, year } = this.props;
     const monthName = this.getMonth(getPreviousMonth(month, year).month);
-    this.setState({ monthName, ...getPreviousMonth(month, year) });
+    this.props.currentDate({ ...getPreviousMonth(month, year) });
+    this.setState({ monthName });
   };
 
   setNextMonth = () => {
-    const { month, year } = this.state;
+    const { month, year } = this.props;
     const monthName = this.getMonth(getNextMonth(month, year).month);
-    this.setState({ monthName, ...getNextMonth(month, year) });
+    this.props.currentDate({ ...getNextMonth(month, year) });
+    this.setState({ monthName });
   };
 
   setPrevYear = () => {
-    const { year } = this.state;
-    this.setState({ year: year - 1 });
+    const { year } = this.props;
+    this.props.currentDate({ year: year - 1 });
   };
 
   setNextYear = () => {
-    const { year } = this.state;
-    this.setState({ year: year + 1 });
+    const { year } = this.props;
+    this.props.currentDate({ year: year + 1 });
   };
 
   handlePrev = event => {
@@ -74,7 +76,7 @@ class CalendarHeader extends Component {
         </button>
 
         {`${this.state.monthName} `}
-        {`${this.state.year}`}
+        {`${this.props.year}`}
 
         <button
           onMouseDown={this.handleNext}

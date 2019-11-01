@@ -2,13 +2,13 @@ export const dateObject = {
   thisYear: new Date().getFullYear(),
   thisMonth: new Date().getMonth() + 1,
   weekDays: {
+    Sunday: "Sun",
     Monday: "Mon",
     Tuesday: "Tue",
     Wednesday: "Wed",
     Thursday: "Thu",
     Friday: "Fri",
-    Saturday: "Sat",
-    Sunday: "Sun"
+    Saturday: "Sat"
   },
   calendarMonths: {
     January: "Jan",
