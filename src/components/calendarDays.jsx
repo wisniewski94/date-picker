@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import calendar, {
+import SingleDay from './singleDay';
   dateObject,
   isDate,
   isSameMonth,
@@ -7,18 +8,39 @@ import calendar, {
 } from "../utils/dateParser";
 
 class CalendarDays extends Component {
-  state = { calendar: [] };
+  state = { calendar: calendar(this.props.month, this.props.year) };
+
   getCalendarDates = () => {
     const { month, year } = this.props;
-    console.log(month, year);
     return calendar(month, year);
   };
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("UPDATE");
+    const calendar = this.getCalendarDates();
+    if (prevProps.month !== this.props.month) {
+      this.setState({ calendar });
+    }
   }
 
-  renderDay = (date, index) => {
+  renderCalendarGrid() {
+    const { calendar } = this.state;
+    if (calendar === undefined) return;
+    let rows = [];
+    let iterator = 0;
+    for (let i = 0; i < 6; i++) {
+      let items = [];
+      for (let x = 0; x < 7; x++) {
+        items.push(
+          <td key={"cal" + iterator}>{this.renderDay(calendar[iterator])}</td>
+        );
+        iterator++;
+      }
+      rows.push(<tr key={"row" + iterator}>{items}</tr>);
+    }
+    return rows;
+  }
+  renderDay = date => {
+    if (date === undefined) return;
     const { current, month, year, today } = this.props;
     const _date = new Date(date.join("-"));
     const isToday = isSameDay(_date, today);
@@ -35,21 +57,15 @@ class CalendarDays extends Component {
       className = "day";
     }
     return (
-      <div className={className} key={date[2] + date[1]}>
+      <SingleDay className={className} key={date[2] + date[1]}>
         {date[2]}
-      </div>
+      </SingleDay>
     );
     //const onClick = this.props.goToDate(_date);
   };
-  componentDidMount() {
-    console.log("RENDERING2");
-    this.setState({ calendar: this.getCalendarDates() });
-  }
+  componentDidMount() {}
   render() {
-    console.log("RENDERING");
-    return (
-      <React.Fragment>{this.state.calendar.map(this.renderDay)}</React.Fragment>
-    );
+    return <>{this.renderCalendarGrid()}</>;
   }
 }
 

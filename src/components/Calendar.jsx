@@ -31,13 +31,17 @@ class Calendar extends Component {
           year={year}
           currentDate={this.handleDateChange}
         ></CalendarHeader>
-        <CalendarLabel></CalendarLabel>
-        <CalendarDays
-          month={month}
-          year={year}
-          today={today}
-          current={current}
-        ></CalendarDays>
+        <table>
+          <tbody>
+            <CalendarLabel></CalendarLabel>
+            <CalendarDays
+              month={month}
+              year={year}
+              today={today}
+              current={current}
+            ></CalendarDays>
+          </tbody>
+        </table>
       </div>
     );
   }
