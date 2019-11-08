@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import calendar, { dateObject, isDate } from "../utils/dateParser";
 import CalendarHeader from "./calendarHeader";
 import CalendarLabel from "./calendarLabel";
 import CalendarDays from "./calendarDays";
+import "../styles/calendar.sass";
+
 class Calendar extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,6 @@ class Calendar extends Component {
     const { date } = props;
 
     this.state = {
-      current: date,
       month: date.getMonth() + 1,
       year: date.getFullYear(),
       today: new Date()
@@ -23,9 +23,10 @@ class Calendar extends Component {
   };
 
   render() {
-    const { month, year, today, current } = this.state;
+    const { month, year, today } = this.state;
+    const { current, available, second, className } = this.props;
     return (
-      <div>
+      <div className={className + " date-picker"}>
         <CalendarHeader
           month={month}
           year={year}
@@ -39,6 +40,9 @@ class Calendar extends Component {
               year={year}
               today={today}
               current={current}
+              second={second}
+              available={available}
+              handleCurrent={this.props.handleCurrentChange}
             ></CalendarDays>
           </tbody>
         </table>
@@ -49,7 +53,10 @@ class Calendar extends Component {
 
 Calendar.propTypes = {
   date: PropTypes.instanceOf(Date).isRequired,
-  onDateChanged: PropTypes.func
+  current: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
+  second: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
+  handleCurrentChange: PropTypes.func,
+  available: PropTypes.array
 };
 
 export default Calendar;

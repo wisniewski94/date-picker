@@ -66,6 +66,23 @@ export const isDate = date => {
   return isDate && isValidDate;
 };
 
+export const findNextDay = (array, from, to) => {
+  if (!(isDate(from) && Array.isArray(array))) return false;
+  if (to === undefined || to === "") return false;
+  const available = array
+    .map(element => new Date(element.join("-")))
+    .filter(element => from <= element);
+  let range = [];
+  for (let i = 0; i < available.length; i++) {
+    let tomorrow = new Date();
+    tomorrow.setTime(available[i].getTime() + 24 * 60 * 60 * 1000);
+    range.push(available[i]);
+    if (!isSameDay(available[i + 1], tomorrow)) break;
+  }
+  range = range.map(element => element.getTime());
+  return range.indexOf(to.getTime()) >= 0 && range.indexOf(from.getTime()) >= 0;
+};
+
 // (bool) Checks if two date values are of the same month and year
 export const isSameMonth = (date, basedate = new Date()) => {
   if (!(isDate(date) && isDate(basedate))) return false;
@@ -79,10 +96,16 @@ export const isSameMonth = (date, basedate = new Date()) => {
   return +basedateMonth === +dateMonth && +basedateYear === +dateYear;
 };
 
+export const findDay = (array, date) => {
+  if (!(isDate(date) && Array.isArray(array))) return false;
+  const available = array.map(element => new Date(element.join("-")));
+  const match = available.filter(element => isSameDay(element, date));
+  return match.length > 0;
+};
+
 // (bool) Checks if two date values are the same day
 export const isSameDay = (date, basedate = new Date()) => {
   if (!(isDate(date) && isDate(basedate))) return false;
-
   const basedateDate = basedate.getDate();
   const basedateMonth = +basedate.getMonth() + 1;
   const basedateYear = basedate.getFullYear();

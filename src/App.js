@@ -1,11 +1,12 @@
 import React from "react";
 import "./App.css";
-import Calendar from "./components/calendar";
+import "./styles/reset.scss";
+import DatePicker from "./components/datePicker";
 
 function App() {
   return (
     <div className="App">
-      <Calendar date={new Date()}></Calendar>
+      <DatePicker></DatePicker>
     </div>
   );
 }
