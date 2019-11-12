@@ -4,6 +4,9 @@ import {
   getPreviousMonth,
   getNextMonth
 } from "./../utils/dateParser";
+import "../styles/calendarHeader.sass";
+import ArrowLeft from "./icons/arrowLeft";
+import ArrowRight from "./icons/arrowRight";
 
 class CalendarHeader extends Component {
   constructor(props) {
@@ -71,19 +74,20 @@ class CalendarHeader extends Component {
           onMouseDown={this.handlePrev}
           onMouseUp={this.handleClear}
           onMouseLeave={this.handleClear}
+          className="arrow"
         >
-          Previous
+          <ArrowLeft />
         </button>
-
-        {`${this.state.monthName} `}
-        {`${this.props.year}`}
-
+        <strong>
+          {`${this.state.monthName} `}
+          {`${this.props.year}`}
+        </strong>
         <button
           onMouseDown={this.handleNext}
           onMouseUp={this.handleClear}
           onMouseLeave={this.handleClear}
-        >
-          Next
+          className="arrow">
+          <ArrowRight />
         </button>
       </div>
     );

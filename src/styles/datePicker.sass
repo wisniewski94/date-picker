@@ -1,7 +1,18 @@
 .inline
-    display: inline-block
+    display: inline-flex
     padding: 6px
-    border: 1px solid black
+    border: 1px solid #c3c3c3
     border-radius: 3px
-    input:nth-of-type(2)
-        margin-left: 25px
+    .main-arrow
+        padding: 0 20px
+.invisible
+    display: none
+
+input
+    &:focus
+        background-color: #3bbdbd
+        color: white
+        outline: none
+        border-radius: 4px
+        &::placeholder
+            color: white

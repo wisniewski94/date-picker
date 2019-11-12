@@ -3,6 +3,7 @@ import Calendar from "./calendar";
 import { isSameDay, isDate, findNextDay } from "./../utils/dateParser";
 import Input from "./common/input";
 import "../styles/datePicker.sass";
+import ArrowRight from "./icons/arrowRight";
 
 class DatePicker extends Component {
   state = {
@@ -21,12 +22,33 @@ class DatePicker extends Component {
   };
 
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleClick);
+    document.addEventListener("mousedown", this.handleClickOutside, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClick);
+    document.removeEventListener("mousedown", this.handleClickOutside, false);
   }
+
+  handleClickOutside = event => {
+    if (
+      !this.refs.from.contains(event.target) &&
+      !this.refs.to.contains(event.target)
+    ) {
+      this.setState(prevState => {
+        if (prevState.opened !== "") {
+          return { opened: "" };
+        }
+      });
+    }
+  };
+
+  handleFocus = ({ target }) => {
+    this.setState(prevState => {
+      if (prevState.opened !== target.name) {
+        return { opened: target.name };
+      }
+    });
+  };
 
   handleChange = ({ currentTarget: input }) => {
     const val = input.value;
@@ -106,61 +128,51 @@ class DatePicker extends Component {
     return date.toISOString().substring(0, 10);
   };
 
-  handleClick = ({ currentTarget: input }) => {
-    //if (this.refs[input.name] === undefined) return;
-    console.log(this.refs[input.name]);
-    // if (this.refs[input.name].contains(input)) {
-    //   console.log("inside");
-    //   return;
-    // }
-    // console.log("outside");
-    //this.setState({ opened: input.name });
-  };
-
   render() {
     return (
       <>
         <div className="inline">
           <Input
-            className={""}
             label={"Check In"}
             name={"from"}
             type={"text"}
             size={10}
             maxLength={10}
             value={this.state.data.from}
-            onClick={this.handleClick}
+            onFocus={this.handleFocus}
             onChange={this.handleChange}
           />
-          <Calendar
-            ref="from"
-            className={this.state.opened === "from" ? "visible" : "invisible"}
-            current={this.state.from}
-            second={this.state.to}
-            handleCurrentChange={this.handleFrom}
-            date={new Date()}
-            available={this.state.available}
-          ></Calendar>
+          <ArrowRight className="main-arrow" />
           <Input
-            className={""}
             label={"Check Out"}
             name={"to"}
             size={10}
             maxLength={10}
             type={"text"}
-            onClick={this.handleClick}
+            onFocus={this.handleFocus}
             value={this.state.data.to}
             onChange={this.handleChange}
           />
-          <Calendar
-            ref="to"
-            className={this.state.opened === "to" ? "visible" : "invisible"}
-            current={this.state.to}
-            second={this.state.from}
-            handleCurrentChange={this.handleTo}
-            date={new Date()}
-            available={this.state.available}
-          ></Calendar>
+          <div ref="from">
+            <Calendar
+              className={this.state.opened === "from" ? "visible" : "invisible"}
+              current={this.state.from}
+              second={this.state.to}
+              handleCurrentChange={this.handleFrom}
+              date={new Date()}
+              available={this.state.available}
+            ></Calendar>
+          </div>
+          <div ref="to">
+            <Calendar
+              className={this.state.opened === "to" ? "visible" : "invisible"}
+              current={this.state.to}
+              second={this.state.from}
+              handleCurrentChange={this.handleTo}
+              date={new Date()}
+              available={this.state.available}
+            ></Calendar>
+          </div>
         </div>
       </>
     );

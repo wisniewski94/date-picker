@@ -31,7 +31,7 @@ class Calendar extends Component {
           month={month}
           year={year}
           currentDate={this.handleDateChange}
-        ></CalendarHeader>
+        />
         <table>
           <tbody>
             <CalendarLabel></CalendarLabel>

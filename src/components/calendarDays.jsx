@@ -52,15 +52,16 @@ class CalendarDays extends PureComponent {
       className = "current";
     } else if (isSecond) {
       className = "second";
-    } else if (isToday) {
-      className = "today";
     } else if (isAvailable) {
       className = "available";
     } else if (inMonth) {
       className = "day";
     }
     if (!inMonth) {
-      className = className + " outMonth";
+      className += " outMonth";
+    }
+    if (isToday) {
+      className += " today";
     }
 
     return (
