@@ -16,7 +16,13 @@ class DatePicker extends Component {
       [2019, "11", "06"],
       [2019, "11", "07"],
       [2019, "11", "10"],
-      [2019, "11", "11"]
+      [2019, "11", "01"],
+      [2019, "12", "02"],
+      [2019, "12", "03"],
+      [2019, "12", "04"],
+      [2019, "12", "05"],
+      [2019, "12", "06"],
+      [2019, "12", "07"]
     ],
     opened: ""
   };
@@ -30,6 +36,14 @@ class DatePicker extends Component {
   }
 
   handleClickOutside = event => {
+    if (event.target.name === "from" || event.target.name === "to") {
+      this.setState(prevState => {
+        if (prevState.opened !== event.target.name) {
+          return { opened: event.target.name };
+        }
+      });
+      return;
+    }
     if (
       !this.refs.from.contains(event.target) &&
       !this.refs.to.contains(event.target)

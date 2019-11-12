@@ -69,7 +69,7 @@ class CalendarHeader extends Component {
   componentDidMount() {}
   render() {
     return (
-      <div>
+      <div className="wrapper">
         <button
           onMouseDown={this.handlePrev}
           onMouseUp={this.handleClear}
@@ -86,7 +86,8 @@ class CalendarHeader extends Component {
           onMouseDown={this.handleNext}
           onMouseUp={this.handleClear}
           onMouseLeave={this.handleClear}
-          className="arrow">
+          className="arrow"
+        >
           <ArrowRight />
         </button>
       </div>
