@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "node-sass": "^4.13.0",
+    "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0",
@@ -31,12 +32,27 @@
       "last 1 safari version"
     ]
   },
+  "eslint-plugin-jsx-a11y": "^6.2.3",
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged"
+    }
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.26.0"
+    "babel-register": "^6.26.0",
+    "@zilahir/eslint-config": "^1.0.1",
+    "@zilahir/stylelint-config": "^1.0.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "prettier": "^1.18.2",
+    "sass-loader": "^8.0.0"
   },
   "babel": {
     "presets": [
