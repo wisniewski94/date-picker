@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Calendar from "./calendar";
+import Calendar from "./Calendar";
 import { isSameDay, isDate, findNextDay } from "./../utils/dateParser";
 import Input from "./common/input";
 import "../styles/datePicker.sass";
